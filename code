@@ -1,0 +1,75 @@
+create table list_of_workers (
+worker_id INT,
+fname varchar (62),
+lname varchar (62),
+phone_number int,
+notation varchar (255),
+primary key (worker_id)
+);
+create table specialty (
+specialty_id int,
+name_of_work varchar(255),
+primary key (specialty_id)
+);
+create table specialty_workers (
+id int,
+worker_id int,
+specialty_id int,
+primary key (id),
+FOREIGN KEY (worker_id) REFERENCES list_of_workers (worker_id),
+FOREIGN KEY (specialty_id) REFERENCES specialty (specialty_id)
+);
+create table membership_brigade (
+ id int,
+ brigade_id int,
+ worker_id int,
+ primary key (id),
+ foreign key (brigade_id) references brigade(brigade_id),
+ foreign key (worker_id)references list_of_workers(worker_id)
+);
+create table brigade (
+ brigade_id int,
+ name_of_brigade varchar(32),
+ taskmaster varchar(32),
+ note varchar(255),
+ primary key (brigade_id)
+);
+create table materials (
+ material_id int,
+ name_of_material varchar(62),
+ unit_measure varchar(32),
+ primary key (material_id)
+);
+create table object(
+ object_id int,
+ name_of_object varchar(62),
+ address varchar(32),
+ type_object_id varchar(62),
+ primary key(object_id)
+);
+create table work_schedule (
+ number_order_time int,
+ object_id int,
+ job_description varchar(255),
+ brigade_id int,
+ from_note varchar(32),
+ primary key (number_order_time),
+ foreign key (object_id) references object(object_id),
+ foreign key(brigade_id) references brigade (brigade_id)
+);
+create table utilized_materials (
+ number_order_materials int,
+ object_id int,
+ brigade_id int,
+ material_id int,
+ primary key (number_order_materials),
+ foreign key (object_id ) references object (object_id),
+ foreign key (brigade_id) references brigade (brigade_id),
+ foreign key (material_id)references materials(material_id)
+);
+create table type_of_object(
+ type_object_id int,
+ name_type varchar(62),
+ unit_measure varchar(32),
+ primary key (type_object_id)
+);
